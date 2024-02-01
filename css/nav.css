@@ -2,7 +2,7 @@
 
 nav {
   display: flex;
-  background-color: #ff6600;
+  background-color: lightblue;
   align-items: center;
   padding: 5px 20px;
   border-radius: 3px 3px 0 0;
@@ -20,4 +20,11 @@ nav {
 .nav-right {
   margin-left: auto;
   text-align: right;
+}
+
+.main-nav{
+    margin: 0 10px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
 }

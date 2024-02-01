@@ -27,7 +27,7 @@
 }
 
 .story-link:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .story-author {
@@ -36,4 +36,28 @@
 
 .story-user {
   display: block;
+}
+
+.star, .gbin{
+    font-size: 0.75rem;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.gbin:hover {
+    color: darkslateblue;
+}
+
+.story-author{
+    margin-left: 2em;
+    font-size: 0.85rem;
+    color: blue;
+    padding: 6px 0;
+}
+
+.story-user{
+    display: block;
+    margin-left: 2em;
+    font-size: 0.85rem;
+    color: orange;
 }
