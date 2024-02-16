@@ -73,7 +73,7 @@ class StoryList {
    */
 
     async addStory(usr, {title, author, url }) {
-      const tok = user.loginToken;
+      const tok = usr.loginToken;
       const resp = await axios({
           method: "POST",
           url: `${BASE_URL}/stories`,
@@ -81,20 +81,20 @@ class StoryList {
       });
       const story = new Story(resp.data.story);
       this.stories.unshift(story);
-        user.ownStories.unshift(story);
+        usr.ownStories.unshift(story);
 
         return story;
     }
     async removeStory(usr, stID) {
-        const tok = user.loginToken;
+        const tok = usr.loginToken;
         await axios({
             url: `${BASE_URL}/stories/${stID}`,
             method: "DELETE",
             data: {token: user.loginToken}
         });
         this.stories = this.stories.filter(story => story.storyId !== storyId);
-        user.ownStories = user.ownStories.filter(s => s.storyId !== storyId);
-        user.favorites = user.favorites.filter(s => s.storyId !== storyId);
+        usr.ownStories = user.ownStories.filter(s => s.storyId !== storyId);
+        usr.favorite = user.favorite.filter(s => s.storyId !== storyId);
         
     }
 }
@@ -236,6 +236,7 @@ class User {
     }
 
     isFavorite(st) {
-        return this.favorites.some(s => (s.storyId === story.storyId));
+        return this.favorites.some(s => (s.storyId === st.storyId));
     }
+
 }

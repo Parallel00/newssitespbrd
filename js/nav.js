@@ -21,7 +21,7 @@ $navLogin.on("click", navLoginClick);
 
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
-  $(".main-nav-links").show();
+  $(".main-nav").show();
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
@@ -34,6 +34,7 @@ function navSubStory(e) {
 }
 
 function navOwnStories(e) {
+    console.debug("navOwnStories", e);
     hidePageComponents();
     userStories();
     $ownStories.show();
@@ -41,7 +42,7 @@ function navOwnStories(e) {
 
 function navFavs(e) {
     hidePageComponents();
-    favoritesList.show();
+    favoritesList();
 }
 
 function navProfClk(e) {
@@ -51,5 +52,5 @@ function navProfClk(e) {
 
 $navsub.on("click", navSubStory);
 $navUserProfile.on("click", navProfClk);
-$body.on("click", "#my-stories", navOwnStories);
+$body.on("click", "#nv-my-stories", navOwnStories);
 $body.on("click", "#favs", navFavs);

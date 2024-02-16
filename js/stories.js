@@ -19,12 +19,16 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+function generateStoryMarkup(story, delBTNShow = false) {
+  console.debug("generateStoryMarkup", story);
 
-  const hostName = story.getHostName();
+    const hostName = story.getHostName();
+    const seeStar = Boolean(currentUser);
   return $(`
       <li id="${story.storyId}">
+      <div>
+        ${delBTNShow ? delBTN() : ""}
+        ${seeStar ? starr(story, currentUser) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -54,13 +58,13 @@ function putStoriesOnPage() {
 
 
 function starr(stry, usr) {
-    const fav = user.isFavorite(story);
-    const sttype = isFavorite ? "fas" : "far";
+    const fav = usr.isFavorite(stry);
+    const sttype = fav ? "fas" : "far";
     return `<span class="star"><i class="${sttype} fa-star"></i></span>`
 }
 
 function delBTN() {
-    return `<span class="trash-can"><i class="fas fa-trash-alt"></i></span>`;
+    return `<span class="gbin"><i class="fas fa-trash-alt"></i></span>`;
 }
 
 
@@ -73,7 +77,7 @@ async function delStory(e) {
     await userStories();
 }
 
-$ownStories.on("click", ".trash-can", delStory);
+$ownStories.on("click", ".gbin", delStory);
 
 async function subStory(e) {
     e.preventDefault();
@@ -86,7 +90,7 @@ async function subStory(e) {
 
     const stry = await storyList.addStory(currentUser, data);
 
-    const $stry = generateStorymarkup(story);
+    const $stry = generateStoryMarkup(stry);
     $allStoriesList.prepend($story);
 
     $submitfrm.slideUp("slow");
@@ -113,10 +117,10 @@ function userStories() {
 
 function favoritesList() {
     $favoriteStories.empty();
-    if (currentUser.favorite.length === 0) {
-        $favoriteStories.append("<h5>No favorites.</h5>")
+    if (currentUser.favorites.length === 0) {
+        $favoriteStories.append("<h5>No favorites here.</h5>")
     } else {
-        for (let story of currentUser.favs) {
+        for (let story of currentUser.favorites) {
             const $story = generateStoryMarkup(story);
             $favoriteStories.append($story);
         }
@@ -125,7 +129,7 @@ function favoritesList() {
 }
 
 async function favToggle(e) {
-    const $tar = $(evt.target);
+    const $tar = $(e.target);
     const $licls = $tar.closest("li");
     const styID = $licls.attr("id");
     const stry = storyList.stories.find(s => s.styID === styID);
